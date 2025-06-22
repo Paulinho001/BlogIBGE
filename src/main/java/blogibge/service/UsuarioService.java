@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.*;
 
-public class PersistenciaService {
+public class UsuarioService {
     private static final String ARQUIVO = "usuario.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 

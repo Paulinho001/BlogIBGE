@@ -1,7 +1,7 @@
 package blogibge.repository;
 
 import blogibge.model.Usuario;
-import blogibge.service.PersistenciaService;
+import blogibge.service.UsuarioService;
 
 public class DadosRepository {
     private Usuario usuario;
@@ -15,7 +15,7 @@ public class DadosRepository {
     }
 
     public void salvarDados() {
-        PersistenciaService.salvarUsuario(usuario);
+        UsuarioService.salvarUsuario(usuario);
     }
 
     public void adicionarFavorito(blogibge.model.Noticia noticia) {

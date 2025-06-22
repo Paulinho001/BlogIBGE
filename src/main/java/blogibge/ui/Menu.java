@@ -3,15 +3,15 @@ package blogibge.ui;
 import blogibge.model.Noticia;
 import blogibge.model.Usuario;
 import blogibge.repository.DadosRepository;
-import blogibge.service.IBGENoticiasService;
-import blogibge.service.PersistenciaService;
+import blogibge.service.IbgeNoticiasService;
+import blogibge.service.UsuarioService;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
 
-    private static IBGENoticiasService noticiasService = new IBGENoticiasService();
+    private static IbgeNoticiasService noticiasService = new IbgeNoticiasService();
     private static Usuario usuario;
     private static DadosRepository dados;
     private static List<Noticia> noticias;
@@ -19,12 +19,12 @@ public class Menu {
     public static void exibirMenu() {
         Scanner scanner = new Scanner(System.in);
 
-        usuario = PersistenciaService.carregarUsuario();
+        usuario = UsuarioService.carregarUsuario();
         if (usuario == null) {
             System.out.print("Bem-vindo! Digite seu nome ou apelido: ");
             String nome = scanner.nextLine();
             usuario = new Usuario(nome);
-            PersistenciaService.salvarUsuario(usuario);
+            UsuarioService.salvarUsuario(usuario);
         }
         dados = new DadosRepository(usuario);
 

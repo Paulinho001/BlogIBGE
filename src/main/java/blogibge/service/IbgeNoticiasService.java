@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IBGENoticiasService {
+public class IbgeNoticiasService {
     public List<Noticia> buscarNoticias() {
         List<Noticia> lista = new ArrayList<>();
 
