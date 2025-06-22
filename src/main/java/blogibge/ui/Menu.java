@@ -49,19 +49,19 @@ public class Menu {
                     buscarNoticias(scanner);
                     break;
                 case 2:
-                    gerenciarFavoritos(scanner);
+//                    gerenciarFavoritos(scanner);
                     break;
                 case 3:
-                    marcarComoLida(scanner);
+//                    marcarComoLida(scanner);
                     break;
                 case 4:
-                    gerenciarParaLerDepois(scanner);
+//                    gerenciarParaLerDepois(scanner);
                     break;
                 case 5:
-                    exibirListas(scanner);
+//                    exibirListas(scanner);
                     break;
                 case 6:
-                    ordenarListas(scanner);
+//                    ordenarListas(scanner);
                     break;
                 case 7:
                     dados.salvarDados();
@@ -92,181 +92,28 @@ public class Menu {
     }
 
     private static void buscarNoticias(Scanner scanner) {
-        System.out.println("\n=== Buscar Notícias ===");
-        System.out.println("1 - Por título");
-        System.out.println("2 - Por palavra-chave");
-        System.out.println("3 - Por data (AAAA-MM-DD)");
-        System.out.print("Escolha: ");
-        int escolha = lerNumero(scanner);
 
-        System.out.print("Digite o termo de busca: ");
-        String termo = scanner.nextLine().toLowerCase();
-
-        List<Noticia> resultado = noticias.stream().filter(n -> {
-            switch (escolha) {
-                case 1:
-                    return n.getTitulo().toLowerCase().contains(termo);
-                case 2:
-                    return n.getIntroducao().toLowerCase().contains(termo) ||
-                            n.getTitulo().toLowerCase().contains(termo);
-                case 3:
-                    return n.getDataPublicacao() != null && n.getDataPublicacao().startsWith(termo);
-                default:
-                    return false;
-            }
-        }).toList();
-
-        if (resultado.isEmpty()) {
-            System.out.println("Nenhuma notícia encontrada.");
-        } else {
-            resultado.forEach(System.out::println);
-        }
     }
-
-    private static void gerenciarFavoritos(Scanner scanner) {
-        System.out.println("\n=== Gerenciar Favoritos ===");
-        listarNoticias();
-
-        System.out.print("Digite o número da notícia para [1] Adicionar ou [2] Remover dos favoritos: ");
-        int escolha = lerNumero(scanner);
-
-        if (escolha <= 0 || escolha > noticias.size()) {
-            System.out.println("Escolha inválida.");
-            return;
-        }
-
-        Noticia noticia = noticias.get(escolha - 1);
-
-        System.out.println("[1] Adicionar ou [2] Remover?");
-        int acao = lerNumero(scanner);
-
-        if (acao == 1) {
-            dados.adicionarFavorito(noticia);
-            System.out.println("Adicionado aos favoritos.");
-        } else if (acao == 2) {
-            dados.removerFavorito(noticia);
-            System.out.println("Removido dos favoritos.");
-        } else {
-            System.out.println("Opção inválida.");
-        }
-    }
-
-    private static void marcarComoLida(Scanner scanner) {
-        System.out.println("\n=== Marcar como Lida ===");
-        listarNoticias();
-
-        System.out.print("Digite o número da notícia que deseja marcar como lida: ");
-        int escolha = lerNumero(scanner);
-
-        if (escolha <= 0 || escolha > noticias.size()) {
-            System.out.println("Escolha inválida.");
-            return;
-        }
-
-        Noticia noticia = noticias.get(escolha - 1);
-        dados.marcarComoLida(noticia);
-        System.out.println("Notícia marcada como lida.");
-    }
-
-    private static void gerenciarParaLerDepois(Scanner scanner) {
-        System.out.println("\n=== Gerenciar 'Para Ler Depois' ===");
-        listarNoticias();
-
-        System.out.print("Digite o número da notícia para [1] Adicionar ou [2] Remover da lista: ");
-        int escolha = lerNumero(scanner);
-
-        if (escolha <= 0 || escolha > noticias.size()) {
-            System.out.println("Escolha inválida.");
-            return;
-        }
-
-        Noticia noticia = noticias.get(escolha - 1);
-
-        System.out.println("[1] Adicionar ou [2] Remover?");
-        int acao = lerNumero(scanner);
-
-        if (acao == 1) {
-            dados.adicionarParaLerDepois(noticia);
-            System.out.println("Adicionado na lista 'Para ler depois'.");
-        } else if (acao == 2) {
-            dados.removerParaLerDepois(noticia);
-            System.out.println("Removido da lista.");
-        } else {
-            System.out.println("Opção inválida.");
-        }
-    }
-
-    private static void exibirListas(Scanner scanner) {
-        System.out.println("\n=== Suas Listas ===");
-        System.out.println("1 - Favoritos");
-        System.out.println("2 - Lidas");
-        System.out.println("3 - Para ler depois");
-        System.out.print("Escolha: ");
-        int escolha = lerNumero(scanner);
-
-        List<Noticia> listaSelecionada = switch (escolha) {
-            case 1 -> usuario.getFavoritos();
-            case 2 -> usuario.getLidas();
-            case 3 -> usuario.getParaLerDepois();
-            default -> null;
-        };
-
-        if (listaSelecionada == null) {
-            System.out.println("Opção inválida.");
-            return;
-        }
-
-        if (listaSelecionada.isEmpty()) {
-            System.out.println("Lista vazia.");
-        } else {
-            listaSelecionada.forEach(System.out::println);
-        }
-    }
-
-    private static void ordenarListas(Scanner scanner) {
-        System.out.println("\n=== Ordenar Listas ===");
-        System.out.println("1 - Favoritos");
-        System.out.println("2 - Lidas");
-        System.out.println("3 - Para ler depois");
-        System.out.print("Escolha a lista: ");
-        int listaEscolhida = lerNumero(scanner);
-
-        List<Noticia> lista = switch (listaEscolhida) {
-            case 1 -> usuario.getFavoritos();
-            case 2 -> usuario.getLidas();
-            case 3 -> usuario.getParaLerDepois();
-            default -> null;
-        };
-
-        if (lista == null) {
-            System.out.println("Opção inválida.");
-            return;
-        }
-
-        if (lista.isEmpty()) {
-            System.out.println("Lista vazia.");
-            return;
-        }
-
-        System.out.println("Ordenar por:");
-        System.out.println("1 - Título");
-        System.out.println("2 - Data");
-        System.out.println("3 - Tipo");
-        System.out.print("Escolha: ");
-        int ordem = lerNumero(scanner);
-
-        switch (ordem) {
-            case 1 -> lista.sort((a, b) -> a.getTitulo().compareToIgnoreCase(b.getTitulo()));
-            case 2 -> lista.sort((a, b) -> b.getDataPublicacao().compareToIgnoreCase(a.getDataPublicacao()));
-            case 3 -> lista.sort((a, b) -> a.getTipo().compareToIgnoreCase(b.getTipo()));
-            default -> {
-                System.out.println("Opção inválida.");
-                return;
-            }
-        }
-
-        System.out.println("Lista ordenada:");
-        lista.forEach(System.out::println);
-    }
+//
+//    private static void gerenciarFavoritos(Scanner scanner) {
+//
+//    }
+//
+//    private static void marcarComoLida(Scanner scanner) {
+//
+//    }
+//
+//    private static void gerenciarParaLerDepois(Scanner scanner) {
+//
+//        }
+//    }
+//
+//    private static void exibirListas(Scanner scanner) {
+//
+//    }
+//
+//    private static void ordenarListas(Scanner scanner) {
+//
+//    }
 
 }
